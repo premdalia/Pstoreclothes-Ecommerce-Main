@@ -1,0 +1,30 @@
+.cartitem{
+    border: 2px solid #ccc;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+}
+.image{
+    margin-left: 5px;
+
+}
+.remove{
+    margin: auto 10px;
+}
+.details{
+    margin: auto 0px;
+}
+
+.Total{
+display: flex;
+justify-content: right;
+font-weight: 900;
+    font-size: 30px;
+}
+
+.cart-main{
+    max-width: 1200px;
+    margin: 0 auto;
+}
