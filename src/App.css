@@ -33,7 +33,7 @@
 .drop select{
   /* display: flex;
   justify-content: center; */
-  margin-right: -1270px;
+  margin-right: -1100px;
   height:30px;
   width:150px;
   font-size: 20px;
@@ -111,14 +111,7 @@ width:100%;
 }
 
 
-.header{
-  /* box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center; */
-}
+
 
 .mainsearch{
   width: 700px;

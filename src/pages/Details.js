@@ -2,139 +2,113 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 // import '../App.css';
-import './Details.css'
-import { useDispatch } from 'react-redux'
+import "./Details.css";
+import { useDispatch } from "react-redux";
 import { addProduct } from "./Cart/cartSlice";
 
 function Details() {
+  const { productid } = useParams();
+  const [details, setDetails] = useState([]);
+  const dispatch = useDispatch();
 
-    const { productid } = useParams();
-    const [details, setDetails] = useState([]);
-    const dispatch=useDispatch()
-
-
-    useEffect(()=>{
-        axios
-        .get(`https://fluffy-bear-veil.cyclic.app/?id=${productid}`)
-        .then((response)=>{
-            setDetails(response.data);
-        })
-    }, [productid] );
-const goingpur=()=>{
-
+  useEffect(() => {
+    axios
+      .get(`https://fluffy-bear-veil.cyclic.app/?id=${productid}`)
+      .then((response) => {
+        setDetails(response.data);
+      });
+  }, [productid]);
+  const goingpur = () => {
     alert("You are going to purchase..");
-}
+  };
 
-//     const addToCart = () => {
-//         // Logic to add the current product to the cart
-//         // You can use local storage or state management library for this
-//         // For simplicity, let's assume you're using local storage
-//         const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-//         cartItems.push(details);
-//         localStorage.setItem('cartItems', JSON.stringify(cartItems));
-//         alert("Product add successfully in cart");
-// }
-
-const addToCart = () => {
+  const addToCart = () => {
     if (!details) return; // Ensure details are available before adding to cart
     dispatch(addProduct(details)); // Dispatch the addProduct action with the product details
-    // console.log(`triggered addtocart`,details)
-    // alert("Prod added successfully to cart");
-};
 
+    alert("Added to Cart..");
+  };
 
-    if (!details) {
-        return <h1>Loading...</h1>
-    }
-    return (
-        <>
-            <div className="detailcard">
-            <div className="dproductimage">
-                    <img src={details.product_images} alt={details.product_name}  /></div>
-                    {/* height="300px" width="400px" */}
-               <div className="dproductdetails">
-               <h3 >{details.product_name}</h3>
-               <p>{details.description}</p>
-                <h3 >₹{details.price}</h3>
-                <button onClick={addToCart}>Add to Cart</button>
-                <button className="buy"onClick={goingpur}>Buy Now</button>
-
-
-
-                </div>
-               </div>
-            
-        </>
-
-    );
+  if (!details) {
+    return <h1>Loading...</h1>;
+  }
+  return (
+    <>
+      <div className="detailcard">
+        <div className="dproductimage">
+          <img src={details.product_images} alt={details.product_name} />
+        </div>
+        {/* height="300px" width="400px" */}
+        <div className="dproductdetails">
+          <h3>{details.product_name}</h3>
+          <p>{details.description}</p>
+          <h3>₹{details.price}</h3>
+          <button onClick={addToCart}>Add to Cart</button>
+          {/* <button className="buy"onClick={goingpur}>Buy Now</button> */}
+        </div>
+      </div>
+    </>
+  );
 }
 export default Details;
-
-
-
-
 
 // import axios from "axios";
 // import { useEffect, useState } from "react";
 // import { useParams } from "react-router";
-// import './Details.css';
+// import { useDispatch } from "react-redux";
+// import { addProduct } from "./Cart/cartSlice";
 
 // function Details() {
-//     const { productid } = useParams();
-//     const [details, setDetails] = useState(null);
-//     const [quantity, setQuantity] = useState(1); // Initialize quantity state with 1
+//   const { productid } = useParams();
+//   const [details, setDetails] = useState(null);
+//   const [selectedSize, setSelectedSize] = useState(null); // State to store selected size
+//   const dispatch = useDispatch();
 
-//     useEffect(() => {
-//         axios
-//             .get(`https://fluffy-bear-veil.cyclic.app/?id=${productid}`)
-//             .then((response) => {
-//                 setDetails(response.data);
-//             })
-//     }, [productid]);
+//   useEffect(() => {
+//     axios.get(`https://fluffy-bear-veil.cyclic.app/?id=${productid}`).then((response) => {
+//       setDetails(response.data);
+//     });
+//   }, [productid]);
 
-//     const addToCart = () => {
-//         const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-//         // Add the specified quantity of the product to the cart
-//         for (let i = 0; i < quantity; i++) {
-//             cartItems.push(details);
-//         }
-//         localStorage.setItem('cartItems', JSON.stringify(cartItems));
-//         alert("Product added successfully to the cart");
-//     }
+//   const addToCart = () => {
+//     if (!details || !selectedSize) return; // Ensure details and selected size are available before adding to cart
+//     const productWithSize = { ...details, size: selectedSize }; // Include selected size in the product details
+//     dispatch(addProduct(productWithSize)); // Dispatch the addProduct action with the product details including size
+//     alert("Added to Cart..");
+//   };
 
-//     const incrementQuantity = () => {
-//         setQuantity(quantity + 1);
-//     }
+//   const handleSizeChange = (event) => {
+//     setSelectedSize(event.target.value); // Update selected size when the user selects a size
+//   };
 
-//     const decrementQuantity = () => {
-//         if (quantity > 1) {
-//             setQuantity(quantity - 1);
-//         }
-//     }
+//   if (!details) {
+//     return <h1>Loading...</h1>;
+//   }
 
-//     if (!details) {
-//         return <h1>Loading...</h1>
-//     }
-
-//     return (
-//         <div className="detailcard">
-//             <div className="dproductimage">
-//                 <img src={details.product_images} alt={details.product_name} />
-//             </div>
-//             <div className="dproductdetails">
-//                 <h3>{details.product_name}</h3>
-//                 <p>{details.description}</p>
-//                 <h3>₹{details.price}</h3>
-//                 <div className="quantity-controls">
-//                     <button onClick={decrementQuantity}>-</button>
-//                     <span>{quantity}</span>
-//                     <button onClick={incrementQuantity}>+</button>
-//                 </div>
-//                 <button onClick={addToCart}>Add to Cart</button>
-//                 <button className="buy" onClick={() => alert("You are going to purchase..")}>Buy Now</button>
-//             </div>
+//   return (
+//     <div className="detailcard">
+//       <div className="dproductimage">
+//         <img src={details.product_images} alt={details.product_name} />
+//       </div>
+//       <div className="productdetails">
+//         <h2>{details.product_name}</h2>
+//         <p>{details.description}</p>
+//         <div className="sizes">
+//           <label htmlFor="size">Select Size:</label>
+//           <select id="size" value={selectedSize} onChange={handleSizeChange}>
+//             <option value="">Select Size</option>
+//             <option value="S">S</option>
+//             <option value="M">M</option>
+//             <option value="L">L</option>
+//             <option value="XL">XL</option>
+//           </select>
 //         </div>
-//     );
+//         <button onClick={addToCart} disabled={!selectedSize}>
+//           Add to Cart
+//         </button>
+//       </div>
+//     </div>
+//   );
 // }
 
 // export default Details;
