@@ -70,19 +70,53 @@ font-size: 30px;
     height: 50px;
 }
 
-.cart-btn-rem-add {
+.cart-btn-add-rem-main{
     width: 35px;
     height: 35px;
     background-color: #e398c749;
     cursor: pointer;
-    border: solid black 1px;
+    border: solid black 2px;
     border-radius: 15%;
-    padding-bottom: 3px;
+}
+
+.cart-btn-rem-add {
+    margin-top: 8px !important;
+}
+
+.remove{
+    display: flex;
+    border: solid 2px #ff0000;
+    padding: 5px 10px;
+    transition: .5s;
+    color: #ff0000;
+    transition: .5s;
+    border-radius: 8px;
+}
+
+.remove svg path{
+    fill: #ff0000;
+    transition: .5s;
+}
+
+.cross-icon{
+    margin-top: 5px;
+}
+
+.remove:hover{  
+    background-color: #ff0000;
 }
 
 .butback {
-    color: red;
-    /* border: none; */
+    color: #ff0000;
+    transition: .5s;
+}
+
+.remove:hover .butback {
+    color: #FFF;
+}
+
+.remove:hover svg path{
+    fill: #FFF;
 }
 
 .total-max-width {

@@ -168,6 +168,8 @@ const productItemsSlice = createSlice({
             const existingItem = state.items.find((item) => item.id === newItem.product_id);
 
             if (!existingItem) {
+                state.totalQuantity++;
+
                 state.items.push({
                     id: newItem.product_id,
                     name: newItem.product_name,
@@ -180,6 +182,8 @@ const productItemsSlice = createSlice({
             } else {
                 existingItem.quantity++;
                 existingItem.totalPrice += newItem.price;
+                state.totalQuantity++;
+
             }
 
             updateLocalStorage(state);
@@ -195,27 +199,7 @@ const productItemsSlice = createSlice({
             }
         },
 
-        // increaseQuantity(state, action) {
-        //     const itemToIncrease = action.payload;
-        
-        //     if (itemToIncrease) {
-        //         const updatedItem = {
-        //             ...itemToIncrease,
-        //             quantity: itemToIncrease.quantity + 1,
-        //             totalPrice: itemToIncrease.totalPrice + itemToIncrease.price
-        //         };
-        
-        //         // Find the index of the item in the items array
-        //         const index = state.items.findIndex(item => item.id === itemToIncrease.id);
-        
-        //         // Replace the item in the items array with the updated item
-        //         state.items[index] = updatedItem;
-        
-        //         state.totalQuantity++;
-        //         updateLocalStorage(state);
-        //     }
-        // }
-        
+
         increaseQuantity(state, action) {
             const itemId = action.payload;
             const itemToIncrease = state.items.find((item) => item.id === itemId);
@@ -224,6 +208,7 @@ const productItemsSlice = createSlice({
                 itemToIncrease.quantity++;
                 itemToIncrease.totalPrice += itemToIncrease.price;
                 state.totalQuantity++;
+
                 updateLocalStorage(state);
             }
         },
@@ -252,6 +237,7 @@ const productItemsSlice = createSlice({
 const updateLocalStorage = (state) => {
     localStorage.setItem("Cart", JSON.stringify(state.items));
     state.localStorageItems = JSON.parse(localStorage.getItem("Cart"));
+    // console.log(totalQuantity)
 };
 
 export const { addProduct, removeProduct, increaseQuantity, decreaseQuantity } = productItemsSlice.actions;

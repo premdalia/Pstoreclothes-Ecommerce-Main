@@ -24,9 +24,9 @@ function Search() {
             <div className="card">
              <Link to={`../Details/${clothes.product_id}`} className="btn">
 
-             <img src={clothes.product_images} alt={clothes.product_name} height="300px" width="300px"/>
-             <h3 style={{textAlign:"left"}}>{clothes.product_name}</h3>
-             <h3 style={{textAlign:"left"}}>₹{clothes.price}</h3></Link></div>
+             <img src={clothes.product_images} alt={clothes.product_name} className="card-item-img"/>
+             <div div className="product-name">{clothes.product_name}</div>
+             <div className="card-item-price">₹{clothes.price}</div></Link></div>
             // <div className="card" key={searchvalue.product_id}>
             //     <h3>{searchvalue.product_name}</h3>
             //     <img src={searchvalue.product_images} alt={searchvalue.product_name} height="300px" width="400px"/>

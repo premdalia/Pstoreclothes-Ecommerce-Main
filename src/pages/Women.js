@@ -16,7 +16,6 @@
 //         })
 //     },[])
 
-    
 //   useEffect(() => {
 //     let url = "https://fluffy-bear-veil.cyclic.app/?sub=clothes&g=woman";
 
@@ -37,18 +36,16 @@
 //     function onChange(e) {
 //         setSearchtext(e.target.value);
 //       }
-    
+
 //     return(
 
 // <>
 //         <div className="drop">
 
-
-  
 //         <select
 //           className="dropdown"
 //           value={searchtext}
-//           onChange={onChange} 
+//           onChange={onChange}
 //         >
 //           <option>Select Brand</option>
 //           <option value=" ">All</option>
@@ -75,13 +72,13 @@
 
 //         </div></>
 //     );
-    
+
 // }
 // export default Women;
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import '../App.css';
+import "../App.css";
 import { Link } from "react-router-dom";
 
 function Women() {
@@ -94,7 +91,9 @@ function Women() {
             .get("https://fluffy-bear-veil.cyclic.app/?sub=clothes&g=woman")
             .then((response) => {
                 setCothesdata(response.data);
-                const companies = [...new Set(response.data.map(item => item.company_name))];
+                const companies = [
+                    ...new Set(response.data.map((item) => item.company_name)),
+                ];
                 setUniqueCompanies(companies);
             });
     }, []);
@@ -105,13 +104,18 @@ function Women() {
         if (searchtext.trim() !== "") {
             url += `&cn=${searchtext}`;
         }
+        console.log("URL:", url); // Log the constructed URL
 
-        axios.get(url)
-            .then((response) => {
-                const filteredData = response.data.filter(item => item.target_gender === 'woman');
-                setCothesdata(filteredData);
-            });
+        axios.get(url).then((response) => {
+            setCothesdata(response.data);
+        });
     }, [searchtext]);
+    // axios.get(url)
+    //     .then((response) => {
+    //         const filteredData = response.data.filter(item => item.target_gender === 'woman');
+    //         setCothesdata(filteredData);
+    // });
+    // }, [searchtext]);
 
     if (clothesdata.length === 0) {
         return <h1>Loading....</h1>;
@@ -141,10 +145,23 @@ function Women() {
             <div className="App2">
                 {clothesdata.map((clothes) => (
                     <div className="card" key={clothes.product_id}>
-                        <Link to={`/Details/${clothes.product_id}`} className="btn">
-                            <img src={clothes.product_images} alt={clothes.product_name} height="300px" width="300px" />
-                            <h3 style={{ textAlign: "left" }}>{clothes.product_name}</h3>
-                            <h3 style={{ textAlign: "left" }}>₹{clothes.price}</h3>
+                        <Link
+                            to={`/Details/${clothes.product_id}`}
+                            className="btn"
+                        >
+                            <img
+                            className="card-item-img"
+                                src={clothes.product_images}
+                                alt={clothes.product_name}
+                                height="300px"
+                                width="300px"
+                            />
+                            <div className="product-name">
+                                {clothes.product_name}
+                            </div>
+                            <div className="card-item-price">
+                                ₹{clothes.price}
+                            </div>
                         </Link>
                     </div>
                 ))}

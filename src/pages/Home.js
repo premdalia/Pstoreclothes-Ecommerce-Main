@@ -93,6 +93,7 @@ function Home() {
             </Carousel>
             <hr></hr>
             <div className="drop">
+                <div className="drop-sub">
                 <select
                     className="dropdown"
                     value={searchtext}
@@ -106,6 +107,7 @@ function Home() {
                         </option>
                     ))}
                 </select>
+                </div>
             </div>
 
             <div className="App2">
@@ -116,17 +118,16 @@ function Home() {
                             className="btn"
                         >
                             <img
+                                className="card-item-img"
                                 src={shoes.product_images}
                                 alt={shoes.product_name}
-                                height="300px"
-                                width="300px"
                             />
-                            <h3 style={{ textAlign: "left" }}>
+                            <div className="product-name">
                                 {shoes.product_name}
-                            </h3>
-                            <h3 style={{ textAlign: "left" }}>
+                            </div>
+                            <div className="card-item-price">
                                 ₹{shoes.price}
-                            </h3>
+                            </div>
                         </Link>
 
                         {/* <Link to="/Cart"><button type="submit">Add to Cart</button></Link> */}

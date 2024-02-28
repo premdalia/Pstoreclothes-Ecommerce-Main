@@ -8,16 +8,78 @@ import { addProduct } from "./Cart/cartSlice";
 
 function Details() {
   const { productid } = useParams();
-  const [details, setDetails] = useState([]);
+  const [details, setDetails] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(productid)
+
+    // const apiUrl = `http://localhost:5000/?id=${productid}`;
+    const apiUrl = `https://fluffy-bear-veil.cyclic.app/?id=${productid}`;
+    console.log("API URL:", apiUrl);
     axios
-      .get(`https://fluffy-bear-veil.cyclic.app/?id=${productid}`)
+    .get(apiUrl,{timeout:5000})
+    // .get(`https://fluffy-bear-veil.cyclic.app/?id=${productid}`)
       .then((response) => {
-        setDetails(response.data);
+        setDetails(response.data[0]);
       });
-  }, [productid]);
+    }, [productid]);
+
+
+
+//   useEffect(() => {
+//     console.log(productid);
+//     // const apiUrl = `https://fluffy-bear-veil.cyclic.app/?id=${productid}`;
+//     const apiUrl = `http://localhost:5000/?id=${productid}`;
+//     console.log("API URL:", apiUrl);
+//     axios
+//       .get(apiUrl, { timeout: 5000 })
+//       .then((response) => {
+//         // Check if the response data is an array and contains at least one object
+//         if (Array.isArray(response.data) && response.data.length > 0) {
+//           setDetails(response.data[0]); // Set the first object in the array as details
+//         } else {
+//           setDetails(null); // Set details to null if no data is available
+//         }
+//       })
+//       .catch((error) => {
+//         console.error("Error fetching product details:", error);
+//         setDetails(null); // Reset details state on error
+//       });
+// }, [productid]);
+
+    
+   
+useEffect(() => {
+  console.log(details);
+  // Check if product_name is available before logging
+  if (details && details.product_name) {
+    console.log(details.product_name);
+  } else {
+    console.log("Product name not available yet.");
+  }
+}, [details]);
+//   useEffect(() => {
+//     console.log(productid)
+
+//     const apiUrl = `https://fluffy-bear-veil.cyclic.app/?id=${productid}`;
+//     console.log("API URL:", apiUrl);
+//     axios
+//       // .get(`https://fluffy-bear-veil.cyclic.app/?id=${productid}`)
+//       .get(apiUrl)
+//       .then((response) => {
+//         setDetails(response.data);
+//       });
+// }, [productid]);
+
+// useEffect(() => {
+//     console.log(details); // Log the updated state here
+// }, [details]);
+
+
+
+
+
   const goingpur = () => {
     alert("You are going to purchase..");
   };
@@ -43,7 +105,7 @@ function Details() {
           <h3>{details.product_name}</h3>
           <p>{details.description}</p>
           <h3>₹{details.price}</h3>
-          <button onClick={addToCart}>Add to Cart</button>
+          <button className="buttonaddtocart" onClick={addToCart}>Add to Cart</button>
           {/* <button className="buy"onClick={goingpur}>Buy Now</button> */}
         </div>
       </div>

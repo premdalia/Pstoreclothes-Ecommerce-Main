@@ -1,26 +1,65 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import '../App.css';
+import "../App.css";
 import { Link } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
 function ALL() {
-    const [shoesdata,setShoesdata]=useState([]);
+    const [shoesdata, setShoesdata] = useState([]);
+    const [uniqueCompanies, setUniqueCompanies] = useState([]);
+    const [searchtext, setSearchtext] = useState("");
 
-    useEffect(()=>{
+
+    useEffect(() => {
         axios
-        .get("https://fluffy-bear-veil.cyclic.app/?sub=clothes")
-        .then((response)=>{
-            setShoesdata(response.data);
-        })
-    },[])
-    if(!shoesdata){
-        return <h1>Loading....</h1>
+            .get("https://fluffy-bear-veil.cyclic.app/?sub=clothes")
+            .then((response) => {
+                setShoesdata(response.data);
+
+                const companies = [
+                  ...new Set(response.data.map((item) => item.company_name)),
+              ];
+              setUniqueCompanies(companies);
+            });
+    }, []);
+    function onChange(e) {
+      setSearchtext(e.target.value);
+  }
+
+
+    useEffect(() => {
+      let url = "https://fluffy-bear-veil.cyclic.app/?sub=clothes";
+
+      if (searchtext && searchtext !== " ") {
+          url += `&cn=${searchtext}`;
+      }
+
+      axios.get(url).then((response) => {
+          setShoesdata(response.data);
+      });
+  }, [searchtext]);
+    if (!shoesdata) {
+        return <h1>Loading....</h1>;
     }
 
-    return(
-        <>
-        
-        {/* <Carousel 
+    return (
+        <>   <div className="drop">
+        <div className="drop-sub">
+        <select
+            className="dropdown"
+            value={searchtext}
+            onChange={onChange}
+        >
+            <option>Select Brand</option>
+            <option value=" ">All</option>
+            {uniqueCompanies.map((company) => (
+                <option key={company} value={company}>
+                    {company}
+                </option>
+            ))}
+        </select>
+        </div>
+    </div>
+            {/* <Carousel 
 
 interval={1500}
 pause="hover"
@@ -42,25 +81,32 @@ onSlide={(slideIndex) => console.log(`Active Slide: ${slideIndex}`)}
   </Carousel.Item>
 ))}
 </Carousel><br></br> */}
-      
-       
-        
-        <div className="App2">
-        {shoesdata.map((shoes)=>(
-            <div className="card" key={shoes.product_id}>
-              {/* <Link to={"/Details/${shoes.}"}> */}
-              <Link to={`/Details/${shoes.product_id}`} className="btn">
 
-                <img src={shoes.product_images} alt={shoes.product_name} height="300px" width="300px"/>
-                <h3 style={{textAlign:"left"}}>{shoes.product_name}</h3>
-                <h3 style={{textAlign:"left"}}>₹{shoes.price}</h3>
-                 {/* <div className="btn"><Link to={`Details/${shoes.product_id}`}><button type="submit">More details</button></Link></div> */}
-                  </Link>
+            <div className="App2">
+                {shoesdata.map((shoes) => (
+                    <div className="card" key={shoes.product_id}>
+                        {/* <Link to={"/Details/${shoes.}"}> */}
+                        <Link
+                            to={`/Details/${shoes.product_id}`}
+                            className="btn"
+                        >
+                            <img
+                                className="card-item-img"
+                                src={shoes.product_images}
+                                alt={shoes.product_name}
+                            />
+                            <div className="product-name">
+                                {shoes.product_name}
+                            </div>
+                            <div className="card-item-price">
+                                ₹{shoes.price}
+                            </div>
+                            {/* <div className="btn"><Link to={`Details/${shoes.product_id}`}><button type="submit">More details</button></Link></div> */}
+                        </Link>
+                    </div>
+                ))}
             </div>
-        ))}
-
-        </div></>
+        </>
     );
-    
 }
 export default ALL;
