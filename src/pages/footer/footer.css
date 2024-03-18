@@ -1,6 +1,7 @@
 .maindb{
 margin-top: 50px;
     display:flex;
+    overflow: hidden;
     
 }
 .maindb .fdb1{

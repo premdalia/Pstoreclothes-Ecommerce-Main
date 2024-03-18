@@ -40,6 +40,8 @@
 .dropdown {
     font-size: 20px;
     border: solid 2px #212121;
+    float: right;
+    margin-right: 30px;
 }
 
 .App-header {
@@ -52,12 +54,34 @@
     font-size: calc(10px + 2vmin);
     color: white;
 }
-.mainsearch {
+/* .mainsearch {
     background-color: white;
     border: solid 2px #212121;
     border-radius: 5px;
     padding: 0px 10px;
+} */
+.mainsearch {
+    background-color: white;
+    border: solid 2px #212121;
+    border-radius: 5px;
+    padding: 5px; /* Adjust padding for smaller screens */
+    width: 80%; /* Set the initial width to 80% of its container */
+    max-width: 400px;/* Set a maximum width to prevent it from becoming too wide*/
+    margin: 0 auto; /* Center the search box */
 }
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .mainsearch {
+        border: solid 2px #242424 !important; /* Add 'solid' to specify border style */
+        width: 150px !important; /* Set width to a smaller value */
+        max-width: none !important; /* Remove the maximum width restriction */
+    }
+}
+
+
+
+
 
 .but {
     background-color: rgb(235, 235, 235);
@@ -131,9 +155,7 @@ width:100%;
     margin: 5px 5px 10px;
 }
 
-.mainsearch {
-    width: 700px;
-}
+
 
 /* .nav_links li {
   display: inline-block;

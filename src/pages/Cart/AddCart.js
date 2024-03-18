@@ -237,7 +237,9 @@ function Cart() {
                                 </Link>
                                 <div className="cart-btn-add-rem-main">
                                     <button
-                                        className="cart-btn-rem-add"
+                                        clas
+                                        
+                                        sName="cart-btn-rem-add"
                                         onClick={() =>
                                             handleIncreaseQuantity(item)
                                         }
